@@ -1,11 +1,19 @@
+import { setSessionStorageItem } from "@/operation/sessionStorageProv";
 import { useState } from "react";
+import { NextRouter, useRouter } from 'next/router';
 
 interface LoginFormState {
   email: string;
   password: string;
 }
 
+
+
+
 export default function LoginForm() {
+
+  const router:NextRouter = useRouter();
+
   const [formData, setFormData] = useState<LoginFormState>({
     email: "",
     password: "",
@@ -20,11 +28,13 @@ export default function LoginForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData); // ou envoyez les données à votre backend
+    localStorage.removeItem("try")
+    sessionStorage.setItem("email", formData.email)
+    router.push('/');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto mt-8">
+    <form className="max-w-sm mx-auto mt-8" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
           Adresse e-mail
@@ -56,7 +66,7 @@ export default function LoginForm() {
       <div className="mt-8">
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className='flex items-center px-3 py-2 border rounded text-gray-100 border-gray-600 hover:text-gray-300 hover:border-green-500 appearance-none focus:outline-none'
         >
           Se connecter
         </button>

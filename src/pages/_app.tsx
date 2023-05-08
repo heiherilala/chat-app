@@ -1,3 +1,4 @@
+import navBar from '@/component/navBar'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 
@@ -13,11 +14,9 @@ const clearInSession = ()=>{
 export default function App({ Component, pageProps }: AppProps) {
 
   return (
-    <>
-    <button onClick={addInSession}> {'session'}</button>
-    <button onClick={clearInSession}> {'clear'}</button>
-    
-    <Component {...pageProps} />
-    </>
+    <div>
+      {navBar()}
+      <Component {...pageProps} />
+    </div>
   )
 }
