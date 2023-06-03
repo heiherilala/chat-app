@@ -1,22 +1,11 @@
-import navBar from '@/component/navBar'
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-
-const addInSession = ()=>{
-  localStorage.setItem("try", "herilala")
-}
-
-const clearInSession = ()=>{
-  localStorage.clear()
-}
-
+import NavBarLayout from '@/layouts/nav-bar-layout';
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
-
   return (
-    <div>
-      {navBar()}
+    <NavBarLayout>
       <Component {...pageProps} />
-    </div>
-  )
+    </NavBarLayout>
+  );
 }
