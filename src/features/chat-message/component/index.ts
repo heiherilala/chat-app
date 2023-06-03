@@ -1,2 +1,4 @@
-export * from './ChanneList'
-export * from './ChannelItem'
+export * from './message-list';
+export * from './my-message-item';
+export * from './other-message-item';
+export * from './send';

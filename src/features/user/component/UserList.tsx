@@ -1,11 +1,20 @@
-import React from 'react'
-import { ChannelItemType } from '../type'
-import UserItem from './UserItem'
+import React from 'react';
+import UserItem from './UserItem';
+import { UserItemType } from '../type';
+import UserItemActif from './UserItemActif';
 
-export default function UserList(data:ChannelItemType[]) {
+export default function UserList(
+  data: UserItemType[],
+  onClick: (item: any) => void,
+  idActif: number | null
+) {
   return (
     <ul className="space-y-2 font-medium">
-        {data.map(item=>(UserItem (item)))}
+      {data.map((item) =>
+        item.id == idActif
+          ? UserItemActif(item, onClick)
+          : UserItem(item, onClick)
+      )}
     </ul>
-  )
+  );
 }

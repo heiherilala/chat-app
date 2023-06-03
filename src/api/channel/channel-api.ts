@@ -22,7 +22,7 @@ export const GetChannelsApi = async () => {
     });
 };
 
-export const GetChannelsByIdApi = async (idChannel:number) => {
+export const GetChannelsByIdApi = async (idChannel: number) => {
   const token = sessionStorage.getItem('token');
 
   let myHeaders = new Headers();
@@ -45,10 +45,7 @@ export const GetChannelsByIdApi = async (idChannel:number) => {
 export const CreateChannelApi = async (body: CreateChannelType) => {
   let myHeaders = new Headers();
   const token = sessionStorage.getItem('token');
-  myHeaders.append(
-    'Authorization',
-    'Bearer ' + token
-  );
+  myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 
   let raw = JSON.stringify(body);
@@ -68,13 +65,13 @@ export const CreateChannelApi = async (body: CreateChannelType) => {
     });
 };
 
-export const AddMemberInChannelApi = async (body: {members: number[]}, idChannel:number) => {
+export const AddMemberInChannelApi = async (
+  body: { members: number[] },
+  idChannel: number
+) => {
   let myHeaders = new Headers();
   const token = sessionStorage.getItem('token');
-  myHeaders.append(
-    'Authorization',
-    'Bearer ' + token
-  );
+  myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 
   let raw = JSON.stringify(body);

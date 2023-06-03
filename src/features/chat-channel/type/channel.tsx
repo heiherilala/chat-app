@@ -1,4 +1,4 @@
-export interface UserItemType {
+export interface ChannelItemType {
   id: number;
   name: string;
   active: boolean;

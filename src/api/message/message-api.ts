@@ -1,8 +1,8 @@
 import { apiUrl } from '../../constants';
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-import { CreateChannelType, CreateUser, ModifyUser, SedMessageType } from '@/type';
+import { SedMessageType } from '@/type';
 
-export const getMessagesByChannel = async (idChanel:string) => {
+export const getMessagesByChannel = async (idChanel: string) => {
   const token = sessionStorage.getItem('token');
 
   let myHeaders = new Headers();
@@ -22,7 +22,7 @@ export const getMessagesByChannel = async (idChanel:string) => {
     });
 };
 
-export const getMessagesByUser = async (idChannel:number) => {
+export const getMessagesByUser = async (idUser: number) => {
   const token = sessionStorage.getItem('token');
 
   let myHeaders = new Headers();
@@ -34,7 +34,7 @@ export const getMessagesByUser = async (idChannel:number) => {
     redirect: 'follow',
   };
 
-  return await fetch(apiUrl + `/messages/${idChannel}`, requestOptions)
+  return await fetch(apiUrl + `/messages/${idUser}`, requestOptions)
     .then((response) => response.json())
     .then((res) => res)
     .catch((error) => {
@@ -45,10 +45,7 @@ export const getMessagesByUser = async (idChannel:number) => {
 export const sendMessage = async (body: SedMessageType) => {
   let myHeaders = new Headers();
   const token = sessionStorage.getItem('token');
-  myHeaders.append(
-    'Authorization',
-    'Bearer ' + token
-  );
+  myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 
   let raw = JSON.stringify(body);
@@ -67,4 +64,3 @@ export const sendMessage = async (body: SedMessageType) => {
       throw error;
     });
 };
-

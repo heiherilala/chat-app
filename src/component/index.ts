@@ -1,3 +1,3 @@
-export * from './body'
-export * from './navBar'
-export * from './sideBar'
+export * from './body';
+export * from './navBar';
+export * from './sideBar';

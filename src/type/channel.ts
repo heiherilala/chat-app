@@ -1,4 +1,3 @@
-
 export interface CreateChannelType {
   name: string;
   type?: string;
@@ -19,17 +18,11 @@ export interface ChannelMember {
 }
 
 export interface ChannelType {
-  id: number,
-  name: string,
-  type?: string,
-  createdAt?: string,
-  updatedAt?: string,
-  ownerId?: number,
-  owner: OwnerType
-}
-
-export interface SedMessageType { 
-  channelId: number, 
-  recipientId?: number, 
-  content: string 
+  id: number;
+  name: string;
+  type?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerId?: number;
+  owner: OwnerType;
 }
