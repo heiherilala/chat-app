@@ -1,19 +1,21 @@
-import { CreateUsersApi, logingApi } from '@/api';
-import { LoginForm } from '@/features/authentication';
-import { SingUpForm } from '@/features/authentication/component/sing-up-form';
-import { Profile } from '@/features/user';
-import { CreateUser, LogingUser } from '@/type';
-import { create } from 'domain';
+
 import { NextRouter, useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { CreateUser } from '../type';
+import { CreateUsersApi, GetUserApi } from '../api';
+import SideBarLayout from '../layouts/side-bar-layout';
+import AutorizedLayout from '../layouts/autorized-layout';
+import { Profile } from '../features/user';
+import { UpdateProfileForm } from '../features/authentication';
+import { log } from 'console';
 
 export default function ProfilePage() {
-  const router: NextRouter = useRouter();
+    const [user, setUser] = useState<CreateUser | null>(null);
   useEffect(() => {
-    if (!sessionStorage.getItem('token')) {
-      router.push('/login');
-    }
-  }, []);
+    GetUserApi().then((res) => {setUser(res.user);});
+    
+  },[]);
+  const router: NextRouter = useRouter();
 
   const handleSubmit = (data: any) => {
     let dataTrancformed: CreateUser = {
@@ -23,11 +25,21 @@ export default function ProfilePage() {
       name: data.name,
     };
     CreateUsersApi(dataTrancformed).then((res) => {
-      res.user.email && sessionStorage.setItem('email', res.user.email);
-      res.user.token && sessionStorage.setItem('token', res.user.token);
-      res.user.name && sessionStorage.setItem('name', res.user.name);
+      res.user.email && localStorage.setItem('email', res.user.email);
+      res.user.token && localStorage.setItem('token', res.user.token);
+      res.user.name && localStorage.setItem('name', res.user.name);
       res.user.email && res.user.token && res.user.name && router.push('/');
     });
   };
-  return <Profile />;
+  return (
+    <SideBarLayout>
+      <div className='flex justify-center basis-3/3 hover:basis-2/2'>
+        <AutorizedLayout>
+          <Profile />
+          <div className="bg-white py-24 sm:py-32">{UpdateProfileForm(handleSubmit,user)}</div>
+        </AutorizedLayout>
+      </div>
+    </SideBarLayout>
+
+  )
 }

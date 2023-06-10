@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 const schema = yup.object().shape({
   email: yup.string().email('have to be email form').required('email required'),
   name: yup.string().required('name required'),
+  bio: yup.string().required('bio required'),
   password: yup
   .string()
   .min(8, 'passord have to be more than 8 words')
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
 
 });
 
-export const SingUpForm = (externalSubmitHandler: (data: any) => void) => {
+export const UpdateProfileForm = (externalSubmitHandler: (data:any) => void, firstData:any) => {
   const {
     register,
     handleSubmit,
@@ -30,6 +31,15 @@ export const SingUpForm = (externalSubmitHandler: (data: any) => void) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  useEffect(()=>{
+    reset(
+      {
+        name:firstData?.name?firstData?.name:"",
+        email:firstData?.email?firstData?.email:"",
+        bio:firstData?.bio?firstData?.bio:""
+      }
+    )
+  })
   const onSubmitHandler = (data: any) => {
       externalSubmitHandler(data);
       reset();
@@ -76,6 +86,23 @@ export const SingUpForm = (externalSubmitHandler: (data: any) => void) => {
         )}
       </div>
 
+      <div>
+        <label htmlFor="bio" className="block text-gray-700 font-bold mb-2">
+        bio:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          {...register('bio')}
+          placeholder="bio"
+          type="text"
+          name="bio"
+          required
+        />
+        {typeof errors.bio?.message === 'string' && (
+          <p>{errors?.bio.message}</p>
+        )}
+      </div>
+
       <div className="mt-4">
         <label
           htmlFor="password"
@@ -118,10 +145,10 @@ export const SingUpForm = (externalSubmitHandler: (data: any) => void) => {
       <br />
 
       <button
-        className="registerButton flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
+        className="updateProfileButton flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
         type="submit"
       >
-        Register
+        Update Profile
       </button>
     </form>
   );

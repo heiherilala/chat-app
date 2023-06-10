@@ -1,22 +1,13 @@
-import { GetUserApi } from '@/api';
-import { UserActivity } from '@/type';
-import { NextRouter, useRouter } from 'next/router';
+
 import React, { useEffect, useState } from 'react';
+import { UserActivity } from '../../../type';
+import { GetUserApi } from '../../../api';
 
 export function Profile() {
-  const router: NextRouter = useRouter();
   const [user, setUser] = useState<UserActivity | null>(null);
   useEffect(() => {
-    const ActualToken: String | null = sessionStorage.getItem('token');
-    if (!ActualToken) {
-      router.push('/login');
-    }
     GetUserApi().then((res) => setUser(res));
   }, []);
-
-  const update = () => {
-    router.push('/update');
-  };
 
   if (user) {
     return (
@@ -129,14 +120,6 @@ export function Profile() {
                 </dd>
               </div>
             </div>
-          </div>
-          <div className="flex justify-center basis-3/3 hover:basis-2/2 ">
-            <button
-              onClick={update}
-              className="mx-auto lg:mx-0 hover:underline text-gray-800 font-extrabold rounded mt-4 lg:mt-0 py-4 px-8 shadow opacity-75"
-            >
-              Modify Compte
-            </button>
           </div>
         </div>
       </div>

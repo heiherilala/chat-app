@@ -1,9 +1,9 @@
 import { apiUrl } from '../../constants';
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-import { SedMessageType } from '@/type';
+import { SedMessageType } from '../../type';
 
 export const getMessagesByChannel = async (idChanel: string) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -23,7 +23,7 @@ export const getMessagesByChannel = async (idChanel: string) => {
 };
 
 export const getMessagesByUser = async (idUser: number) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -44,7 +44,7 @@ export const getMessagesByUser = async (idUser: number) => {
 
 export const sendMessage = async (body: SedMessageType) => {
   let myHeaders = new Headers();
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 

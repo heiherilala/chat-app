@@ -1,11 +1,9 @@
-import { CreateChannelApi, CreateUsersApi, logingApi } from '@/api';
+import { CreateChannelApi} from '@/api';
 import { CreateChannelForm } from '@/component/create-channel-form';
-import { LoginForm } from '@/features/authentication';
-import { SingUpForm } from '@/features/authentication/component/sing-up-form';
-import { CreateChannelType, CreateUser, LogingUser } from '@/type';
-import { create } from 'domain';
+import AutorizedLayout from '@/layouts/autorized-layout';
+import SideBarLayout from '@/layouts/side-bar-layout';
+import { CreateChannelType } from '@/type';
 import { NextRouter, useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export default function CreateChannel() {
   const router: NextRouter = useRouter();
@@ -24,8 +22,13 @@ export default function CreateChannel() {
       });
   };
   return (
-    <div className="bg-white py-24 sm:py-32">
-      {CreateChannelForm(handleSubmit)}
-    </div>
+  <SideBarLayout>
+    <AutorizedLayout>
+      <div className="bg-white py-24 sm:py-32">
+        {CreateChannelForm(handleSubmit)}
+      </div>
+    </AutorizedLayout>
+  </SideBarLayout>
+
   );
 }

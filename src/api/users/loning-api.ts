@@ -1,6 +1,7 @@
-import { apiUrl } from '@/constants';
-import { LogingUser } from '@/type';
+
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
+import { LogingUser } from '../../type';
+import { apiUrl } from '../../constants';
 
 export const logingApi = async (body: LogingUser) => {
   let myHeaders = new Headers();

@@ -29,6 +29,7 @@ export const LoginForm = (externalSubmitHandler: (data: any) => void) => {
     <form
       className="max-w-sm mx-auto mt-8"
       onSubmit={handleSubmit(onSubmitHandler)}
+      name='loginForm'
     >
       <h2>Lets sign you in</h2>
 
@@ -40,7 +41,8 @@ export const LoginForm = (externalSubmitHandler: (data: any) => void) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register('email')}
           placeholder="email"
-          type="email"
+          type="text"
+          name="email"
           required
         />
         {typeof errors.email?.message === 'string' && (
@@ -60,6 +62,7 @@ export const LoginForm = (externalSubmitHandler: (data: any) => void) => {
           {...register('password')}
           placeholder="password"
           type="password"
+          name="password"
           required
         />
         {typeof errors.password?.message === 'string' && (
@@ -69,10 +72,10 @@ export const LoginForm = (externalSubmitHandler: (data: any) => void) => {
       <br />
 
       <button
-        className="flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
+        className="loginButton flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
         type="submit"
       >
-        Sign in
+        Login
       </button>
     </form>
   );

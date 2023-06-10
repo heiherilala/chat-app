@@ -1,9 +1,9 @@
 import { apiUrl } from '../../constants';
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-import { CreateChannelType, CreateUser, ModifyUser } from '@/type';
+import { CreateChannelType } from '../../type';
 
 export const GetChannelsApi = async () => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -23,7 +23,7 @@ export const GetChannelsApi = async () => {
 };
 
 export const GetChannelsByIdApi = async (idChannel: number) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -44,7 +44,7 @@ export const GetChannelsByIdApi = async (idChannel: number) => {
 
 export const CreateChannelApi = async (body: CreateChannelType) => {
   let myHeaders = new Headers();
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 
@@ -70,7 +70,7 @@ export const AddMemberInChannelApi = async (
   idChannel: number
 ) => {
   let myHeaders = new Headers();
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');
 
