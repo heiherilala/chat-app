@@ -7,7 +7,6 @@ import { ChannelMember, ChannelType, UserActivity } from '@/type';
 import useStore from '@/zustand/useChannel';
 import Link from 'next/link';
 import { NextRouter, useRouter } from 'next/router';
-import { it } from 'node:test';
 import { useEffect, useState } from 'react';
 
 export default function SideBar() {
@@ -18,41 +17,25 @@ export default function SideBar() {
   const [channelsItem, setChannelsItem] = useState<ChannelItemType[]>([]);
   const [usersItem, setUsersItem] = useState<UserItemType[]>([]);
   const { idChannel, idUser, setIdChannel, setIdUser } = useStore();
-  const tokenVerification = () => {
-    const ActualEmail: string | null = sessionStorage.getItem('email');
-    if (!ActualEmail) {
-      router.push('/login');
-    }
-  };
 
   useEffect(() => {
-    tokenVerification();
-  }, []);
-  useEffect(() => {
-    tokenVerification();
     GetUserApi().then((res) => setUser(res));
-  }, []);
-  useEffect(() => {
-    tokenVerification();
     GetChannelsApi().then((res) => setChannels(res.channels));
-  }, []);
-  useEffect(() => {
-    tokenVerification();
     GetUsersApi().then((res) => setUsers(res.users));
   }, []);
+
   useEffect(() => {
-    tokenVerification();
     let newCannel: ChannelItemType[] = [];
     channels &&
       channels.forEach((item) => newCannel.push(convertChannel(item)));
     setChannelsItem(newCannel);
   }, [channels]);
   useEffect(() => {
-    tokenVerification();
     let newUser: UserItemType[] = [];
     users.forEach((item) => newUser.push(convertUser(item)));
     setUsersItem(newUser);
   }, [users]);
+
   const convertChannel = (user: ChannelType) => {
     return { id: user.id, name: user.name, active: false, details: user.type };
   };
@@ -64,11 +47,14 @@ export default function SideBar() {
       details: channel.bio,
     };
   };
-  const CreateChannel = () => {
-    router.push('/create-channel');
+  const GoToCreateChannel = () => {
+    router.push('/channel/create');
   };
-  const profile = () => {
-    router.push('/profile');
+  const GoToChannel = (id:number) => {
+    router.push('/channel/'+id);
+  };
+  const GoToUserMessage = (id:number) => {
+    router.push('/message/'+id);
   };
 
   return (
@@ -103,7 +89,7 @@ export default function SideBar() {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <h2 className="text-2xl text-Amber-200 font-bold mt-6 flex items-center text-center">
-            Your vompte
+            Your compte
           </h2>
           <ul className="space-y-2 font-medium">
             <li>
@@ -123,30 +109,13 @@ export default function SideBar() {
                 <span className="flex-1 ml-3 whitespace-nowrap">Profile</span>
               </Link>
             </li>
-            <li>
-              <Link
-                href="/update"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">Update</span>
-              </Link>
-            </li>
           </ul>
 
           <h2 className="text-2xl text-Amber-200 font-bold mt-6 flex items-center text-center">
             Your channels
           </h2>
           <button
-            onClick={CreateChannel}
+            onClick={GoToCreateChannel}
             className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <svg
@@ -167,6 +136,7 @@ export default function SideBar() {
           {ChanneList(
             channelsItem,
             (id) => {
+              GoToChannel(id)
               setIdChannel(id);
             },
             idChannel
@@ -178,6 +148,7 @@ export default function SideBar() {
           {UserList(
             usersItem,
             (id) => {
+              GoToUserMessage(id);
               setIdUser(id);
             },
             idUser

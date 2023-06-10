@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
-  name: yup.string().required('name required'),
+  channelName: yup.string().required('name required'),
   members: yup.string().required('members required'),
   type: yup.string().required('type required'),
 });
@@ -20,7 +20,7 @@ export const CreateChannelForm = (
     resolver: yupResolver(schema),
   });
   const onSubmitHandler = (data: any) => {
-    externalSubmitHandler(data);
+    externalSubmitHandler({name:data.channelName,type:data.type,members:data.members});
     reset();
   };
   return (
@@ -30,18 +30,19 @@ export const CreateChannelForm = (
     >
       <h2>Lets create new channel</h2>
       <div>
-        <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-          name:
+        <label htmlFor="channelName" className="block text-gray-700 font-bold mb-2">
+        channelName:
         </label>
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          {...register('name')}
-          placeholder="name"
+          {...register('channelName')}
+          placeholder="channelName"
           type="string"
+          name="channelName"
           required
         />
-        {typeof errors.name?.message === 'string' && (
-          <p>{errors?.name.message}</p>
+        {typeof errors.channelName?.message === 'string' && (
+          <p>{errors?.channelName.message}</p>
         )}
       </div>
 
@@ -49,13 +50,13 @@ export const CreateChannelForm = (
         <label htmlFor="type" className="block text-gray-700 font-bold mb-2">
           Type:
         </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        <select  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register('type')}
           placeholder="type"
-          type="string"
-          required
-        />
+          name="type">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+          </select>
         {typeof errors.type?.message === 'string' && (
           <p>{errors?.type.message}</p>
         )}
@@ -80,10 +81,10 @@ export const CreateChannelForm = (
       <br />
 
       <button
-        className="flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
+        className="createChannelButton flex items-center px-3 py-2 border rounded text-gray-600 border-gray-500 hover:text-gray-800 hover:border-green-500 appearance-none focus:outline-none"
         type="submit"
       >
-        Create
+        Create Channel
       </button>
     </form>
   );

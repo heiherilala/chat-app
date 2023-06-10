@@ -1,9 +1,9 @@
 import { apiUrl } from '../../constants';
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-import { CreateUser, ModifyUser } from '@/type';
+import { CreateUser, ModifyUser } from '../../type';
 
 export const GetUserApi = async () => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -23,7 +23,7 @@ export const GetUserApi = async () => {
 };
 
 export const GetUsersApi = async () => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
@@ -43,7 +43,7 @@ export const GetUsersApi = async () => {
 };
 
 export const UpdateUserApi = async (body: ModifyUser) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + token);
   myHeaders.append('Content-Type', 'application/json');

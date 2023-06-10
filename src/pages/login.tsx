@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export default function Login() {
   const router: NextRouter = useRouter();
   useEffect(() => {
-    if (sessionStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       router.push('/');
     }
   }, []);
@@ -18,9 +18,9 @@ export default function Login() {
       password: data.password,
     };
     logingApi(dataTrancformed).then((res) => {
-      res.user?.email && sessionStorage.setItem('email', res.user.email);
-      res.user?.token && sessionStorage.setItem('token', res.user.token);
-      res.user?.name && sessionStorage.setItem('name', res.user.name);
+      res.user?.email && localStorage.setItem('email', res.user.email);
+      res.user?.token && localStorage.setItem('token', res.user.token);
+      res.user?.name && localStorage.setItem('name', res.user.name);
       res.user?.email && res.user.token && res.user.name && router.push('/');
     });
   };

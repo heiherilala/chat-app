@@ -6,9 +6,9 @@ export default function NavBar() {
   const router: NextRouter = useRouter();
   const [name, setName] = useState<string | null>(null);
   const Logout: () => void = () => {
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('name');
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('token');
     setName(null);
   };
   const Loging: () => void = () => {
@@ -18,12 +18,12 @@ export default function NavBar() {
     router.push('/sing-up');
   };
   useEffect(() => {
-    const ActualName: string | null = sessionStorage.getItem('name');
+    const ActualName: string | null = localStorage.getItem('name');
     setName(ActualName);
     if (!ActualName) {
       Loging();
     }
-  }, [name, typeof window != 'undefined' && sessionStorage.getItem('name')]);
+  }, [name, typeof window != 'undefined' && localStorage.getItem('name')]);
 
   return (
     <nav id="header" className="w-full z-30 top-0 text-white py-1 lg:py-6">
